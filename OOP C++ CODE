@@ -1,0 +1,450 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<iomanip>
+using namespace std;
+void clearscreen() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+const int MAX_STUDENTS = 100;
+const int MAX_DAYS = 365;
+class Student {
+private:
+    string studentId, name, department;
+    int totalClasses, attendedClasses;
+    int attendanceRecord[MAX_DAYS];
+public:
+    Student() {
+        studentId.clear(); name.clear(); department.clear();
+        totalClasses = attendedClasses = 0;
+        for (int i = 0; i < MAX_DAYS; i++) attendanceRecord[i] = 0;
+    }
+    Student(string id, string n, string dept) : studentId(id), name(n), department(dept) {
+        totalClasses = attendedClasses = 0;
+        for (int i = 0; i < MAX_DAYS; i++) attendanceRecord[i] = 0;
+    }
+
+    void setStudentId(const string& id)
+    { 
+        if (!id.empty()) studentId = id; 
+    }
+    void setName(const string& n) 
+    { 
+        if (!n.empty()) name = n; 
+    }
+    void setDepartment(const string& d) 
+    { 
+        if (!d.empty()) department = d; 
+    }
+
+    string getStudentId() const 
+    { 
+        return studentId; 
+    }
+    string getName() const 
+    { 
+        return name; 
+    }
+    string getDepartment() const { 
+        return department; 
+    }
+    int getTotalClasses() const {
+        return totalClasses; 
+    }
+    int getAttendedClasses() const { 
+        return attendedClasses; 
+    }
+    float getPercentage() const {
+        return totalClasses > 0 ? (attendedClasses * 100.0f / totalClasses) : 0.0f;
+    }
+
+    bool markAttendance(int day, int status) {
+        if (day >= 0 && day < MAX_DAYS && (status == 0 || status == 1)) {
+            attendanceRecord[day] = status;
+            return true;
+        }
+        return false;
+    }
+    void updateTotals(int days) {
+        if (days < 0 || days > MAX_DAYS) return;
+        totalClasses = days;
+        attendedClasses = 0;
+        for (int i = 0; i < days; i++) {
+            if (attendanceRecord[i] == 1) attendedClasses++;
+        }
+    }
+    void display() const {
+        cout << "\n  ID     : " << left << setw(12) << studentId;
+        cout << "Name    : " << name;
+        cout << "\n  Dept   : " << left << setw(12) << department;
+        cout << "Total   : " << totalClasses;
+        cout << "\n  Attend : " << left << setw(12) << attendedClasses;
+        cout << "Percent : " << fixed << setprecision(1) << getPercentage() << "%";
+    }
+
+    friend void displayReport(const Student& s);
+    friend bool saveStudent(const Student& s, ofstream& file);
+    friend bool loadStudent(Student& s, ifstream& file);
+};
+
+// Global functions (needed by other methods)
+void displayReport(const Student& s) {
+    cout << "\n" << string(60, '=');
+    cout << "\n           STUDENT ATTENDANCE REPORT";
+    cout << "\n" << string(60, '=');
+    s.display();
+    cout << "\nStatus: " << (s.getPercentage() >= 75.0f ? "PASS (>=75%)" : "FAIL (<75%)") << endl;
+    cout << string(60, '=') << endl;
+}
+
+bool saveStudent(const Student& s, ofstream& file) {
+    if (!file) 
+        return false;
+    file << s.studentId << "|" << s.name << "|" << s.department << "|";
+    file << s.totalClasses << "|" << s.attendedClasses << "|";
+    for (int i = 0; i < MAX_DAYS; i++) 
+        file << s.attendanceRecord[i];
+    file << endl;
+    return true;
+}
+
+bool loadStudent(Student& s, ifstream& file) {
+    if (!file) return false;
+    string line;
+    if (!getline(file, line) || line.empty()) return false;
+
+    size_t pos1 = line.find('|');
+    size_t pos2 = line.find('|', pos1 + 1);
+    size_t pos3 = line.find('|', pos2 + 1);
+    size_t pos4 = line.find('|', pos3 + 1);
+    if (pos1 == string::npos || pos2 == string::npos || pos3 == string::npos || pos4 == string::npos)
+        return false;
+    try {
+        s.studentId = line.substr(0, pos1);
+        s.name = line.substr(pos1 + 1, pos2 - pos1 - 1);
+        s.department = line.substr(pos2 + 1, pos3 - pos2 - 1);
+        s.totalClasses = stoi(line.substr(pos3 + 1, pos4 - pos3 - 1));
+        s.attendedClasses = stoi(line.substr(pos4 + 1, 10));
+        for (int i = 0; i < MAX_DAYS; i++) {
+            int idx = pos4 + 11 + i;
+            s.attendanceRecord[i] = (idx < line.length()) ? (line[idx] - '0') : 0;
+        }
+        return true;
+    }
+    catch (...) { return false; }
+}
+
+class AttendanceSystem {
+private:
+    Student* students[MAX_STUDENTS];
+    int studentCount, totalDays;
+    string filename;
+    void cleanup() {
+        for (int i = 0; i < studentCount; i++) {
+            delete students[i];
+            students[i] = nullptr;
+        }
+        studentCount = 0;
+    }
+public:
+    AttendanceSystem() : studentCount(0), totalDays(0), filename("attendance.txt") {
+        for (int i = 0; i < MAX_STUDENTS; i++) 
+            students[i] = nullptr;
+        loadFromFile();
+        cout << "\nSystem initialized. Students loaded: " << studentCount << endl;
+    }
+    ~AttendanceSystem() {
+        cleanup();
+        saveToFile();
+        cout << "\nSystem shutdown complete. Data auto-saved." << endl;
+    }
+
+    void addStudent() {
+        if (studentCount >= MAX_STUDENTS) {
+            cout << "\n*** Maximum students limit reached! ***" << endl;
+            return;
+        }
+        string id, name, dept;
+        cout << "\n" << string(50, '-') << endl;
+        cout << "           ADD NEW STUDENT";
+        cout << "\n" << string(50, '-') << endl;
+        cout << "Student ID: ";
+        cin >> id;
+        if (id.empty()) 
+        { 
+            cout << "Invalid ID!" << endl; 
+            return; 
+        }
+        cout << "Name     : ";
+        cin.ignore();
+        getline(cin, name);
+        if (name.empty()) { 
+            cout << "Invalid name!" << endl; 
+            return; 
+        }
+        cout << "Department: ";
+        getline(cin, dept);
+        if (dept.empty()) { 
+            cout << "Invalid department!" << endl; 
+            return; 
+        }
+        for (int i = 0; i < studentCount; i++) {
+            if (students[i]->getStudentId() == id) {
+                cout << "\n*** Student ID already exists! ***" << endl;
+                return;
+            }
+        }
+        students[studentCount] = new Student(id, name, dept);
+        students[studentCount]->updateTotals(totalDays);
+        studentCount++;
+        cout << "\n*** Student added successfully! ***" << endl;
+        cout << string(50, '-') << endl;
+    }
+
+    int findStudent(const string& id) const {
+        for (int i = 0; i < studentCount; i++)
+            if (students[i]->getStudentId() == id) 
+                return i;
+        return -1;
+    }
+
+    void markBatchAttendance() {
+        if (studentCount == 0) {
+            cout << "\n*** No students available! Please add students first. ***" << endl;
+            return;
+        }
+        cout << "\n" << string(70, '=') << endl;
+        cout << "                    MARK ATTENDANCE FOR ALL STUDENTS";
+        cout << "\n" << string(70, '=') << endl;
+        int totalDaysForAttendance;
+        cout << "\nEnter TOTAL days for attendance calculation (1-365): ";
+        cin >> totalDaysForAttendance;
+        if (totalDaysForAttendance < 1 || totalDaysForAttendance > MAX_DAYS) {
+            cout << "*** Invalid number! Must be between 1-365. ***" << endl;
+            return;
+        }
+        totalDays = totalDaysForAttendance;
+        cout << "\n" << string(70, '-') << endl;
+        cout << "ATTENDANCE CALCULATION BASED ON " << totalDays << " TOTAL DAYS";
+        cout << "\n" << string(70, '-') << endl << endl;
+        for (int i = 0; i < studentCount; i++) {
+            cout << "\n" << string(50, '=') << endl;
+            cout << "--- Student " << (i + 1) << ": " << students[i]->getStudentId() << " - " << students[i]->getName() << " ---";
+            cout << "\n" << string(50, '=') << endl;
+            int presentDays;
+            cout << "How many days was this student PRESENT out of " << totalDays << " days? (0-" << totalDays << "): ";
+            cin >> presentDays;
+            while (presentDays < 0 || presentDays > totalDays) {
+                cout << "*** ERROR! Enter between 0 and " << totalDays << ": ";
+                cin >> presentDays;
+            }
+            for (int day = 0; day < totalDays; day++) {
+                students[i]->markAttendance(day, day < presentDays ? 1 : 0);
+            }
+            students[i]->updateTotals(totalDays);
+            cout << "\n*** SUMMARY ***" << endl;
+            cout << "Present: " << presentDays << "/" << totalDays << endl;
+            cout << "Absent : " << (totalDays - presentDays) << "/" << totalDays << endl;
+            cout << "Percentage: " << fixed << setprecision(1) << students[i]->getPercentage() << "%" << endl;
+            cout << "*** Updated successfully! ***" << endl;
+            cout << string(50, '-') << endl;
+        }
+        cout << "\n" << string(70, '=') << endl;
+        cout << "*** ALL students attendance updated for " << totalDays << " TOTAL DAYS! ***" << endl;
+        cout << "Total Days Recorded: " << totalDays << endl;
+        cout << string(70, '=') << endl;
+    }
+
+    void viewAllStudents() const {
+        if (studentCount == 0) {
+            cout << "\n*** No students available! ***" << endl;
+            return;
+        }
+        cout << "\n" << string(70, '=') << endl;
+        cout << "                        ALL STUDENTS LIST (" << studentCount << ")";
+        cout << "\n" << string(70, '=') << endl;
+        for (int i = 0; i < studentCount; i++) {
+            cout << "\nStudent " << (i + 1) << ":";
+            students[i]->display();
+            cout << "\n" << string(70, '-') << endl;
+        }
+        cout << string(70, '=') << endl;
+    }
+
+    void viewStudentReport() {
+        if (studentCount == 0) {
+            cout << "\n*** No students available! ***" << endl;
+            return;
+        }
+        cout << "\n" << string(70, '=') << endl;
+        cout << "              AVAILABLE STUDENT IDs (" << studentCount << " students)";
+        cout << "\n" << string(70, '=') << endl;
+        for (int i = 0; i < studentCount; i++) {
+            cout << " " << left << setw(4) << (i + 1) << ". "
+                << left << setw(12) << students[i]->getStudentId()
+                << " - " << students[i]->getName() << endl;
+        }
+        cout << string(70, '=') << endl;
+        string id;
+        cout << "\nEnter Student ID to view report: ";
+        cin >> id;
+        int idx = findStudent(id);
+        if (idx != -1) {
+            displayReport(*students[idx]);
+        }
+        else {
+            cout << "\n*** Student ID '" << id << "' not found! ***" << endl;
+            cout << "Please check the list above and try again." << endl;
+        }
+    }
+
+    void showDefaulters() const {
+        if (studentCount == 0) {
+            cout << "\n*** No students available! ***" << endl;
+            return;
+        }
+        cout << "\n" << string(60, '=') << endl;
+        cout << "                     STUDENTS WITH LOW ATTENDANCE (<75%)";
+        cout << "\n" << string(60, '=') << endl;
+        bool found = false;
+        for (int i = 0; i < studentCount; i++) {
+            if (students[i]->getPercentage() < 75.0f) {
+                cout << "\n--- Student " << (i + 1) << " ---";
+                students[i]->display();
+                cout << "\n" << string(60, '-') << endl;
+                found = true;
+            }
+        }
+        if (!found) cout << "\n*** All students have good attendance! ***" << endl;
+        cout << string(60, '=') << endl;
+    }
+
+    void deleteStudent() {
+        if (studentCount == 0) {
+            cout << "\n*** No students available to delete! ***" << endl;
+            return;
+        }
+        string id;
+        cout << "\n" << string(50, '=') << endl;
+        cout << "                DELETE STUDENT";
+        cout << "\n" << string(50, '=') << endl;
+        cout << "Enter Student ID to delete: ";
+        cin >> id;
+        int idx = findStudent(id);
+        if (idx == -1) {
+            cout << "\n*** Student ID not found! ***" << endl;
+            return;
+        }
+        cout << "\nStudent Found:" << endl;
+        cout << "ID: " << students[idx]->getStudentId() << endl;
+        cout << "Name: " << students[idx]->getName() << endl;
+        cout << "Department: " << students[idx]->getDepartment() << endl;
+        cout << "\nAre you sure you want to DELETE this student? (1=YES, 0=NO): ";
+        int confirm;
+        cin >> confirm;
+        if (confirm != 1) {
+            cout << "\n*** Deletion cancelled! ***" << endl;
+            return;
+        }
+        delete students[idx];
+        for (int i = idx; i < studentCount - 1; i++) {
+            students[i] = students[i + 1];
+        }
+        studentCount--;
+        cout << "\n*** Student deleted successfully! ***" << endl;
+        cout << "Total students now: " << studentCount << endl;
+        cout << string(50, '=') << endl;
+    }
+
+    bool saveToFile() const {
+        ofstream file(filename);
+        if (!file) {
+            cout << "\n*** Cannot open file for writing! ***" << endl;
+            return false;
+        }
+        file << studentCount << endl << totalDays << endl;
+        for (int i = 0; i < studentCount; i++) {
+            saveStudent(*students[i], file);
+        }
+        file.close();
+        cout << "\n*** Data saved successfully to " << filename << "! ***" << endl;
+        return true;
+    }
+
+    bool loadFromFile() {
+        ifstream file(filename);
+        if (!file) {
+            cout << "\nNo existing data file found. Starting fresh." << endl;
+            return false;
+        }
+        cleanup();
+        file >> studentCount >> totalDays;
+        file.ignore();
+        if (studentCount > MAX_STUDENTS || studentCount < 0) {
+            cout << "\n*** Invalid student count in file! Starting fresh. ***" << endl;
+            return false;
+        }
+        for (int i = 0; i < studentCount; i++) {
+            students[i] = new Student();
+            if (!loadStudent(*students[i], file)) {
+                cleanup();
+                return false;
+            }
+        }
+        file.close();
+        cout << studentCount << " students loaded successfully from file!" << endl;
+        return true;
+    }
+
+    void menu() {
+        int choice;
+        clearscreen();
+        do {
+            cout << "\n" << string(65, '=') << endl;
+            cout << "              STUDENT ATTENDANCE MANAGEMENT SYSTEM";
+            cout << "\n" << string(65, '=') << endl;
+            cout << "Total Students: " << studentCount << "  |  Total Days Recorded: " << totalDays << endl;
+            cout << string(65, '-') << endl;
+            cout << "1.  Add New Student";
+            cout << "\n2.  Mark Attendance";
+            cout << "\n3.  View All Students";
+            cout << "\n4.  View Student Report";
+            cout << "\n5.  Show Defaulters (<75%)";
+            cout << "\n6.  Delete Student";
+            cout << "\n7.  Save Data to File";
+            cout << "\n0.  Exit Program";
+            cout << "\n" << string(65, '-') << endl;
+            cout << "Enter your choice (0-7): ";
+            cin >> choice;
+            switch (choice) {
+            case 1: addStudent(); break;
+            case 2: markBatchAttendance(); break;  // Direct call - removed redundant wrapper
+            case 3: viewAllStudents(); break;
+            case 4: viewStudentReport(); break;
+            case 5: showDefaulters(); break;
+            case 6: deleteStudent(); break;
+            case 7: saveToFile(); break;
+            case 0: {
+                cout << "\n*** Thank you for using the system! Goodbye! ***" << endl;
+                return;
+            }
+            default:
+                cout << "\n*** Invalid choice! Please enter 0-7 only. ***" << endl;
+            }
+            cout << "\nPress Enter to continue...";
+            cin.get();
+            cin.ignore();
+            clearscreen();
+        } while (true);
+    }
+};
+
+int main() {
+    AttendanceSystem sys;
+    sys.menu();
+    return 0;
+}
