@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ===== TITLE ===== -->
+    <mxCell id="title" value="Student Attendance Management System — Flowchart" style="text;html=1;strokeColor=none;fillColor=#1E3A5F;fontColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=18;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+      <mxGeometry x="227" y="20" width="1200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ===== START ===== -->
+    <mxCell id="start" value="START" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1E3A5F;fontColor=#FFFFFF;strokeColor=#1E3A5F;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="727" y="100" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Init System -->
+    <mxCell id="init" value="Initialize AttendanceSystem&#xa;Load data from file&#xa;(attendance.txt)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2176AE;fontColor=#FFFFFF;strokeColor=#2176AE;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="727" y="200" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Main Menu -->
+    <mxCell id="menu" value="Display Main Menu&#xa;[1–7, 0 to Exit]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#FFFFFF;strokeColor=#1565C0;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="727" y="310" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Choice Decision -->
+    <mxCell id="choice" value="User Choice?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F57C00;fontColor=#FFFFFF;strokeColor=#E65100;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="727" y="420" width="200" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- Option 1: Add Student -->
+    <mxCell id="opt1_header" value="1. Add Student" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;fontColor=#FFFFFF;strokeColor=#1B5E20;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="580" width="170" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="opt1_valid" value="Validate: Not empty&#xa;ID not duplicate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#43A047;fontColor=#FFFFFF;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="645" width="170" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="opt1_dec" value="Valid?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F57C00;fontColor=#FFFFFF;strokeColor=#E65100;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="100" y="715" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="opt1_add" value="Create Student Object&#xa;&amp; Add to Array" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#43A047;fontColor=#FFFFFF;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="800" width="170" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="opt1_err" value="Show Error" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#FFFFFF;strokeColor=#B71C1C;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="260" y="725" width="100" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Option 2: Mark Attendance -->
+    <mxCell id="opt2_header" value="2. Mark Attendance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#FFFFFF;strokeColor=#0D47A1;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="400" y="580" width="180" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="opt2_days" value="Enter Total Days (1–365)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#FFFFFF;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="400" y="645" width="180" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="opt2_loop" value="For Each Student:&#xa;Enter Present Days" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#FFFFFF;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="400" y="705" width="180" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="opt2_mark" value="markAttendance()&#xa;updateTotals()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#FFFFFF;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="400" y="775" width="180" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="opt2_show" value="Show Summary&#xa;(Present/Absent/Percent)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#FFFFFF;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="400" y="845" width="180" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Option 3: View All -->
+    <mxCell id="opt3_header" value="3. View All Students" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6A1B9A;fontColor=#FFFFFF;strokeColor=#4A148C;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="630" y="580" width="180" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="opt3_check" value="studentCount == 0?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F57C00;fontColor=#FFFFFF;strokeColor=#E65100;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="637" y="645" width="165" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="opt3_list" value="Display All Students&#xa;with Details" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8E24AA;fontColor=#FFFFFF;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="630" y="730" width="180" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Option 4: View Report -->
+    <mxCell id="opt4_header" value="4. View Report" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00695C;fontColor=#FFFFFF;strokeColor=#004D40;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="870" y="580" width="170" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="opt4_find" value="Enter Student ID&#xa;findStudent(id)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00897B;fontColor=#FFFFFF;strokeColor=#00695C;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="870" y="645" width="170" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="opt4_dec" value="Found?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F57C00;fontColor=#FFFFFF;strokeColor=#E65100;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="888" y="715" width="133" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="opt4_rpt" value="displayReport()&#xa;PASS/FAIL status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00897B;fontColor=#FFFFFF;strokeColor=#00695C;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="870" y="800" width="170" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Option 5: Defaulters -->
+    <mxCell id="opt5_header" value="5. Show Defaulters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#FFFFFF;strokeColor=#B71C1C;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="580" width="170" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="opt5_loop" value="Loop All Students&#xa;getPercentage() &lt; 75%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E53935;fontColor=#FFFFFF;strokeColor=#C62828;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="645" width="170" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="opt5_show" value="Display Low&#xa;Attendance Students" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E53935;fontColor=#FFFFFF;strokeColor=#C62828;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="715" width="170" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Option 6: Delete -->
+    <mxCell id="opt6_header" value="6. Delete Student" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4E342E;fontColor=#FFFFFF;strokeColor=#3E2723;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1330" y="580" width="160" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="opt6_find" value="findStudent(id)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6D4C41;fontColor=#FFFFFF;strokeColor=#4E342E;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1330" y="645" width="160" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="opt6_confirm" value="Confirm Delete?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F57C00;fontColor=#FFFFFF;strokeColor=#E65100;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1338" y="705" width="145" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="opt6_del" value="delete student[idx]&#xa;Shift Array Left&#xa;studentCount--" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6D4C41;fontColor=#FFFFFF;strokeColor=#4E342E;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1330" y="790" width="160" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Option 7/0: Save & Exit -->
+    <mxCell id="opt7_save" value="7. saveToFile()&#xa;Write to attendance.txt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474F;fontColor=#FFFFFF;strokeColor=#263238;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="727" y="920" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- END -->
+    <mxCell id="end" value="END" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1E3A5F;fontColor=#FFFFFF;strokeColor=#1E3A5F;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="727" y="1010" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ===== ARROWS ===== -->
+    <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1E3A5F;strokeWidth=2;" edge="1" source="start" target="init" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1E3A5F;strokeWidth=2;" edge="1" source="init" target="menu" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1E3A5F;strokeWidth=2;" edge="1" source="menu" target="choice" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Choice to branches -->
+    <mxCell id="e_c1" value="1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#2E7D32;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt1_header" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c2" value="2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt2_header" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c3" value="3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6A1B9A;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt3_header" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c4" value="4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00695C;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt4_header" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c5" value="5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt5_header" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c6" value="6" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4E342E;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt6_header" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c7" value="7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#37474F;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="opt7_save" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_c0" value="0" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1E3A5F;strokeWidth=2;fontStyle=1;fontSize=11;" edge="1" source="choice" target="end" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Option 1 flow -->
+    <mxCell id="e1a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#43A047;strokeWidth=1.5;" edge="1" source="opt1_header" target="opt1_valid" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e1b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#43A047;strokeWidth=1.5;" edge="1" source="opt1_valid" target="opt1_dec" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e1c" value="Yes" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#43A047;strokeWidth=1.5;fontStyle=1;" edge="1" source="opt1_dec" target="opt1_add" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e1d" value="No" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=1.5;fontStyle=1;" edge="1" source="opt1_dec" target="opt1_err" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Option 2 flow -->
+    <mxCell id="e2a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1976D2;strokeWidth=1.5;" edge="1" source="opt2_header" target="opt2_days" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e2b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1976D2;strokeWidth=1.5;" edge="1" source="opt2_days" target="opt2_loop" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e2c" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1976D2;strokeWidth=1.5;" edge="1" source="opt2_loop" target="opt2_mark" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e2d" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1976D2;strokeWidth=1.5;" edge="1" source="opt2_mark" target="opt2_show" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Option 3 flow -->
+    <mxCell id="e3a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#8E24AA;strokeWidth=1.5;" edge="1" source="opt3_header" target="opt3_check" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e3b" value="No" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#8E24AA;strokeWidth=1.5;fontStyle=1;" edge="1" source="opt3_check" target="opt3_list" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Option 4 flow -->
+    <mxCell id="e4a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00897B;strokeWidth=1.5;" edge="1" source="opt4_header" target="opt4_find" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e4b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00897B;strokeWidth=1.5;" edge="1" source="opt4_find" target="opt4_dec" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e4c" value="Yes" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00897B;strokeWidth=1.5;fontStyle=1;" edge="1" source="opt4_dec" target="opt4_rpt" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Option 5 flow -->
+    <mxCell id="e5a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E53935;strokeWidth=1.5;" edge="1" source="opt5_header" target="opt5_loop" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e5b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E53935;strokeWidth=1.5;" edge="1" source="opt5_loop" target="opt5_show" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Option 6 flow -->
+    <mxCell id="e6a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6D4C41;strokeWidth=1.5;" edge="1" source="opt6_header" target="opt6_find" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e6b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6D4C41;strokeWidth=1.5;" edge="1" source="opt6_find" target="opt6_confirm" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e6c" value="Yes" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6D4C41;strokeWidth=1.5;fontStyle=1;" edge="1" source="opt6_confirm" target="opt6_del" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Loop back to menu -->
+    <mxCell id="loop_back" value="Return to Menu" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#F57C00;strokeWidth=2;dashed=1;fontStyle=2;fontSize=10;" edge="1" source="opt7_save" target="menu" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="600" y="945" />
+          <mxPoint x="600" y="340" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="e_end" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1E3A5F;strokeWidth=2;" edge="1" source="opt7_save" target="end" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Legend -->
+    <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#BDBDBD;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="20" y="940" width="620" height="170" as="geometry" />
+    </mxCell>
+    <mxCell id="legend_title" value="LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1;fontColor=#1E3A5F;" vertex="1" parent="1">
+      <mxGeometry x="30" y="950" width="100" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="l1" value="" style="ellipse;fillColor=#1E3A5F;strokeColor=#1E3A5F;" vertex="1" parent="1"><mxGeometry x="30" y="990" width="50" height="30" as="geometry" /></mxCell>
+    <mxCell id="l1t" value="Start / End" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1"><mxGeometry x="90" y="990" width="100" height="30" as="geometry" /></mxCell>
+    <mxCell id="l2" value="" style="rounded=1;fillColor=#2E7D32;strokeColor=#2E7D32;" vertex="1" parent="1"><mxGeometry x="210" y="990" width="50" height="30" as="geometry" /></mxCell>
+    <mxCell id="l2t" value="Process / Action" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1"><mxGeometry x="270" y="990" width="130" height="30" as="geometry" /></mxCell>
+    <mxCell id="l3" value="" style="rhombus;fillColor=#F57C00;strokeColor=#E65100;" vertex="1" parent="1"><mxGeometry x="420" y="985" width="50" height="40" as="geometry" /></mxCell>
+    <mxCell id="l3t" value="Decision" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1"><mxGeometry x="480" y="990" width="120" height="30" as="geometry" /></mxCell>
+    <mxCell id="l4" value="" style="rounded=1;fillColor=#1565C0;strokeColor=#0D47A1;" vertex="1" parent="1"><mxGeometry x="30" y="1040" width="50" height="30" as="geometry" /></mxCell>
+    <mxCell id="l4t" value="Attendance Module" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1"><mxGeometry x="90" y="1040" width="130" height="30" as="geometry" /></mxCell>
+    <mxCell id="l5" value="" style="rounded=1;fillColor=#C62828;strokeColor=#B71C1C;" vertex="1" parent="1"><mxGeometry x="250" y="1040" width="50" height="30" as="geometry" /></mxCell>
+    <mxCell id="l5t" value="Error / Delete" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1"><mxGeometry x="310" y="1040" width="100" height="30" as="geometry" /></mxCell>
+    <mxCell id="l6" value="" style="rounded=1;fillColor=#37474F;strokeColor=#263238;" vertex="1" parent="1"><mxGeometry x="430" y="1040" width="50" height="30" as="geometry" /></mxCell>
+    <mxCell id="l6t" value="File I/O" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1"><mxGeometry x="490" y="1040" width="80" height="30" as="geometry" /></mxCell>
+
+  </root>
+</mxGraphModel>
